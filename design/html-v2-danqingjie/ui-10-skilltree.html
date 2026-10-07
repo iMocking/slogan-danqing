@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>丹青劫·无限 - 功法图谱</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1920px; height: 1080px; overflow: hidden;
+    font-family: "KaiTi", "STKaiti", "楷体", serif;
+    background: #F5F0E1;
+  }
+  .screen {
+    position: relative; width: 1920px; height: 1080px;
+    background: linear-gradient(180deg, #e8e4d8 0%, #d4d0c4 100%);
+  }
+  .bg-mountain {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 600px 300px at 15% 60%, rgba(50,50,50,0.12) 0%, transparent 70%),
+                radial-gradient(ellipse 700px 350px at 85% 50%, rgba(50,50,50,0.1) 0%, transparent 70%);
+  }
+  .main-panel {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 1600px; height: 880px;
+    background: #EDE4D0; border: 4px solid #8B6F47;
+    box-shadow: 0 12px 48px rgba(0,0,0,0.2);
+    display: flex; flex-direction: column;
+  }
+  .panel-title {
+    text-align: center; font-size: 52px; color: #2C2C2C;
+    letter-spacing: 12px; padding: 20px 0 16px; font-weight: bold;
+  }
+  .panel-title .seal {
+    display: inline-block; width: 30px; height: 30px;
+    background: #B83A2A; color: #F5F0E1; font-size: 13px;
+    vertical-align: middle; margin-left: 8px; border-radius: 3px;
+  }
+  .header-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0 60px;
+  }
+  .tabs {
+    display: flex; gap: 4px;
+  }
+  .tab {
+    padding: 10px 36px; font-size: 20px; color: #5a4a3a;
+    cursor: pointer; border: 2px solid #8B6F47; background: #d8d4c8;
+  }
+  .tab.active { background: #F8F4E8; color: #2C2C2C; font-weight: bold; }
+  .points-display {
+    font-size: 20px; color: #5a4a3a;
+  }
+  .points-display .num { color: #B83A2A; font-weight: bold; font-size: 24px; }
+  .content {
+    flex: 1; display: flex; padding: 30px 60px; gap: 40px;
+  }
+  /* 技能树区域 */
+  .skill-tree {
+    flex: 1; position: relative;
+  }
+  .skill-node {
+    position: absolute; width: 72px; height: 72px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; border: 3px solid #8B6F47; background: #d8d4c8;
+  }
+  .skill-node.unlocked {
+    background: #3a3a3a; color: #C9A961; border-color: #C9A961;
+  }
+  .skill-node.current {
+    background: #B83A2A; color: #F5F0E1; border-color: #C9A961;
+    box-shadow: 0 0 0 6px rgba(184,58,42,0.2);
+  }
+  .skill-node.mastered {
+    background: #C9A961; color: #2C2C2C; border-color: #8B6F47;
+  }
+  .skill-label {
+    position: absolute; text-align: center; font-size: 16px; color: #2C2C2C;
+    width: 90px; margin-left: -9px; margin-top: 78px;
+  }
+  /* 连线 */
+  .connection {
+    position: absolute; height: 3px; background: #8B6F47;
+  }
+  /* 右侧详情 */
+  .skill-detail {
+    width: 380px; background: #F8F4E8; border: 2px solid #8B6F47;
+    padding: 28px;
+  }
+  .detail-title { font-size: 36px; color: #2C2C2C; margin-bottom: 12px; }
+  .skill-type {
+    display: inline-block; padding: 6px 18px; background: #8B6F47;
+    color: #F5F0E1; font-size: 16px; margin-bottom: 20px;
+  }
+  .skill-desc {
+    font-size: 18px; color: #5a4a3a; line-height: 1.8; margin-bottom: 28px;
+  }
+  .skill-stat {
+    display: flex; justify-content: space-between; font-size: 18px;
+    color: #2C2C2C; line-height: 2.4; border-top: 1px solid #c8c4b8;
+    padding-top: 12px; margin-top: 12px;
+  }
+  .skill-stat .label { color: #5a4a3a; }
+  .btn-reset {
+    margin-top: 30px; padding: 12px 32px; border: 2px solid #8B6F47;
+    background: #EDE4D0; font-size: 18px; cursor: pointer;
+  }
+</style>
+</head>
+<body>
+<div class="screen">
+  <div class="bg-mountain"></div>
+
+  <div class="main-panel">
+    <div class="panel-title">功法图谱<span class="seal">谱</span></div>
+
+    <div class="header-row">
+      <div class="tabs">
+        <div class="tab active">剑修</div>
+        <div class="tab">法修</div>
+        <div class="tab">丹修</div>
+        <div class="tab">体修</div>
+      </div>
+      <div class="points-display">修为点 剩余 <span class="num">12</span> 点</div>
+    </div>
+
+    <div class="content">
+      <div class="skill-tree">
+        <!-- 第一行 -->
+        <div class="skill-node" style="top: 30px; left: 50px;">🌑</div>
+        <div class="skill-label" style="top: 30px; left: 50px;">剑影分身</div>
+
+        <div class="skill-node" style="top: 30px; left: 200px;">🌑</div>
+        <div class="skill-label" style="top: 30px; left: 200px;">调息术</div>
+
+        <div class="skill-node" style="top: 30px; left: 350px;">🌑</div>
+        <div class="skill-label" style="top: 30px; left: 350px;">剑意苍穹</div>
+
+        <div class="skill-node" style="top: 30px; left: 500px;">🌑</div>
+        <div class="skill-label" style="top: 30px; left: 500px;">剑破万法</div>
+
+        <div class="skill-node mastered" style="top: 30px; left: 650px;">⚔</div>
+        <div class="skill-label" style="top: 30px; left: 650px;">诛仙一剑</div>
+
+        <!-- 第二行 -->
+        <div class="skill-node unlocked" style="top: 200px; left: 120px;">⚔</div>
+        <div class="skill-label" style="top: 200px; left: 120px;">剑气纵横</div>
+
+        <div class="skill-node unlocked" style="top: 200px; left: 280px;">🗡</div>
+        <div class="skill-label" style="top: 200px; left: 280px;">御剑飞行</div>
+
+        <div class="skill-node" style="top: 200px; left: 430px;">🌑</div>
+        <div class="skill-label" style="top: 200px; left: 430px;">剑心通明</div>
+
+        <div class="skill-node" style="top: 200px; left: 580px;">🌑</div>
+        <div class="skill-label" style="top: 200px; left: 580px;">护体剑气</div>
+
+        <div class="skill-node" style="top: 200px; left: 700px;">🌑</div>
+        <div class="skill-label" style="top: 200px; left: 700px;">万剑归宗</div>
+
+        <!-- 第三行 -->
+        <div class="skill-node current" style="top: 380px; left: 120px;">🗡</div>
+        <div class="skill-label" style="top: 380px; left: 120px;">基础剑法</div>
+
+        <div class="skill-node unlocked" style="top: 380px; left: 280px;">🗡</div>
+        <div class="skill-label" style="top: 380px; left: 280px;">已学习</div>
+
+        <div class="skill-node mastered" style="top: 380px; left: 430px;">✒</div>
+        <div class="skill-label" style="top: 380px; left: 430px;">人剑合一</div>
+
+        <div class="skill-node mastered" style="top: 380px; left: 580px;">✒</div>
+        <div class="skill-label" style="top: 380px; left: 580px;">勇气</div>
+
+        <div class="skill-node" style="top: 380px; left: 700px;">🌑</div>
+        <div class="skill-label" style="top: 380px; left: 700px;">聚气</div>
+      </div>
+
+      <div class="skill-detail">
+        <div class="detail-title">剑气纵横</div>
+        <div class="skill-type">主动技能</div>
+        <div class="skill-desc">
+          凝聚剑气向前方发射三道剑气，对路径上敌人造成150%攻击力伤害。
+        </div>
+        <div class="skill-stat"><span class="label">冷却时间</span><span>8秒</span></div>
+        <div class="skill-stat"><span class="label">消耗真元</span><span>120点</span></div>
+        <div class="skill-stat"><span class="label">等级</span><span>5/10</span></div>
+        <div class="btn-reset">重置修为</div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

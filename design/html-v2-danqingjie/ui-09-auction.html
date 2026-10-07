@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>丹青劫·无限 - 拍卖行</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1920px; height: 1080px; overflow: hidden;
+    font-family: "KaiTi", "STKaiti", "楷体", serif;
+    background: #F5F0E1;
+  }
+  .screen {
+    position: relative; width: 1920px; height: 1080px;
+    background: linear-gradient(180deg, #e8e4d8 0%, #d4d0c4 100%);
+  }
+  .bg-mountain {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 600px 300px at 15% 50%, rgba(50,50,50,0.15) 0%, transparent 70%);
+  }
+  .main-panel {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 1600px; height: 880px;
+    background: #EDE4D0; border: 4px solid #8B6F47;
+    box-shadow: 0 12px 48px rgba(0,0,0,0.2);
+    display: flex; flex-direction: column;
+  }
+  .panel-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 40px 10px;
+  }
+  .panel-title {
+    font-size: 48px; color: #2C2C2C; letter-spacing: 10px; font-weight: bold;
+  }
+  .panel-title .seal {
+    display: inline-block; width: 28px; height: 28px;
+    background: #B83A2A; color: #F5F0E1; font-size: 12px;
+    vertical-align: middle; margin-left: 6px; border-radius: 3px;
+  }
+  .currency-tag {
+    background: #3a3a3a; color: #F5F0E1; padding: 8px 16px;
+    font-size: 16px; display: flex; align-items: center; gap: 8px;
+  }
+  .tabs {
+    display: flex; margin: 10px 40px 0; border-bottom: 2px solid #8B6F47;
+  }
+  .tab {
+    padding: 12px 40px; font-size: 20px; color: #5a4a3a;
+    cursor: pointer; border: 2px solid transparent; border-bottom: none;
+  }
+  .tab.active {
+    background: #F8F4E8; border-color: #8B6F47; color: #2C2C2C; font-weight: bold;
+    margin-bottom: -2px;
+  }
+  /* 筛选栏 */
+  .filter-bar {
+    display: flex; gap: 16px; padding: 20px 40px; align-items: center;
+  }
+  .filter-select {
+    padding: 10px 20px; background: #F8F4E8; border: 2px solid #8B6F47;
+    font-size: 16px; color: #2C2C2C;
+  }
+  .search-box {
+    flex: 1; padding: 10px 16px; background: #F8F4E8;
+    border: 2px solid #8B6F47; font-size: 16px; color: #9A8B75;
+  }
+  .btn-search {
+    padding: 10px 32px; background: #B83A2A; color: #F5F0E1;
+    border: 2px solid #C9A961; font-size: 16px; cursor: pointer;
+  }
+  /* 列表表格 */
+  .auction-list {
+    flex: 1; margin: 0 40px; background: #F8F4E8; border: 2px solid #8B6F47;
+  }
+  .list-header {
+    display: grid; grid-template-columns: 80px 1fr 100px 140px 120px 120px 100px;
+    background: #d8d4c8; padding: 14px 20px; font-size: 16px;
+    color: #2C2C2C; font-weight: bold; border-bottom: 2px solid #8B6F47;
+  }
+  .list-row {
+    display: grid; grid-template-columns: 80px 1fr 100px 140px 120px 120px 100px;
+    padding: 14px 20px; font-size: 16px; color: #2C2C2C;
+    border-bottom: 1px solid #c8c4b8; align-items: center;
+  }
+  .list-row:nth-child(even) { background: #f0ece0; }
+  .item-icon-sm {
+    width: 50px; height: 50px; background: #EDE4D0; border: 1px solid #8B6F47;
+    display: flex; align-items: center; justify-content: center; font-size: 24px;
+  }
+  .quality {
+    display: inline-block; padding: 2px 10px; font-size: 13px;
+    color: #F5F0E1; text-align: center;
+  }
+  .quality.epic { background: #8B6F47; }
+  .quality.legend { background: #B83A2A; }
+  .quality.rare { background: #2a6b8a; }
+  .quality.uncommon { background: #2a6b5a; }
+  .btn-bid {
+    padding: 6px 16px; border: 2px solid #8B6F47; background: #EDE4D0;
+    font-size: 14px; cursor: pointer; text-align: center;
+  }
+  /* 底部 */
+  .bottom-bar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 40px 30px;
+  }
+  .pagination {
+    display: flex; align-items: center; gap: 16px; font-size: 16px; color: #5a4a3a;
+  }
+  .page-btn {
+    width: 36px; height: 36px; border: 2px solid #8B6F47; background: #F8F4E8;
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+  }
+  .btn-list {
+    padding: 14px 48px; background: #B83A2A; color: #F5F0E1;
+    border: 2px solid #C9A961; font-size: 20px; cursor: pointer;
+  }
+</style>
+</head>
+<body>
+<div class="screen">
+  <div class="bg-mountain"></div>
+
+  <div class="main-panel">
+    <div class="panel-header">
+      <div class="panel-title">万宝拍卖行<span class="seal">拍</span></div>
+      <div class="currency-tag">🪙 铜钱 125,800</div>
+    </div>
+
+    <div class="tabs">
+      <div class="tab active">浏览拍卖</div>
+      <div class="tab">我的拍卖</div>
+      <div class="tab">我的出价</div>
+      <div class="tab">拍卖记录</div>
+    </div>
+
+    <div class="filter-bar">
+      <div class="filter-select">全部分类 ▼</div>
+      <div class="filter-select">全部品质 ▼</div>
+      <div class="search-box">输入物品名称</div>
+      <div class="btn-search">搜索</div>
+    </div>
+
+    <div class="auction-list">
+      <div class="list-header">
+        <span>物品图标</span>
+        <span>物品名称</span>
+        <span>品质</span>
+        <span>当前价格</span>
+        <span>卖家</span>
+        <span>剩余时间</span>
+        <span>操作</span>
+      </div>
+      <div class="list-row">
+        <div class="item-icon-sm">🗡</div>
+        <span>青锋剑</span>
+        <span class="quality epic">上品</span>
+        <span>12,500 铜钱</span>
+        <span>剑无双</span>
+        <span>02:35:18</span>
+        <div class="btn-bid">比价</div>
+      </div>
+      <div class="list-row">
+        <div class="item-icon-sm">🟡</div>
+        <span>九转金丹</span>
+        <span class="quality legend">极品</span>
+        <span>88,000 铜钱</span>
+        <span>丹仙子</span>
+        <span>05:12:44</span>
+        <div class="btn-bid">比价</div>
+      </div>
+      <div class="list-row">
+        <div class="item-icon-sm">👘</div>
+        <span>青云道袍</span>
+        <span class="quality rare">上品</span>
+        <span>25,000 铜钱</span>
+        <span>月下舞</span>
+        <span>01:48:09</span>
+        <div class="btn-bid">比价</div>
+      </div>
+      <div class="list-row">
+        <div class="item-icon-sm">🌿</div>
+        <span>七星草</span>
+        <span class="quality uncommon">中品</span>
+        <span>800 铜钱</span>
+        <span>采药翁</span>
+        <span>10:22:31</span>
+        <div class="btn-bid">比价</div>
+      </div>
+      <div class="list-row">
+        <div class="item-icon-sm">📿</div>
+        <span>灵玉珮</span>
+        <span class="quality legend">极品</span>
+        <span>156,000 铜钱</span>
+        <span>玉玲珑</span>
+        <span>08:05:56</span>
+        <div class="btn-bid">比价</div>
+      </div>
+    </div>
+
+    <div class="bottom-bar">
+      <div class="pagination">
+        <div class="page-btn">‹</div>
+        <span>第 1/12 页</span>
+        <div class="page-btn">›</div>
+      </div>
+      <div class="btn-list">上架拍卖</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

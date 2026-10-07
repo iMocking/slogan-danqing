@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>丹青劫·无限 - UI设计稿预览</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "KaiTi", "STKaiti", "楷体", serif;
+    background: #2a2a2a; color: #F5F0E1;
+    padding: 40px;
+  }
+  h1 {
+    text-align: center; font-size: 48px; letter-spacing: 12px;
+    margin-bottom: 8px; color: #F5F0E1;
+  }
+  .subtitle {
+    text-align: center; color: #8B6F47; font-size: 18px;
+    margin-bottom: 40px; letter-spacing: 4px;
+  }
+  .grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    max-width: 1800px; margin: 0 auto;
+  }
+  .card {
+    background: #3a3a3a; border: 2px solid #8B6F47;
+    overflow: hidden; transition: transform 0.2s;
+  }
+  .card:hover { transform: translateY(-4px); border-color: #C9A961; }
+  .card iframe {
+    width: 100%; height: 280px; border: none; display: block;
+  }
+  .card-label {
+    padding: 14px 20px; font-size: 18px; color: #F5F0E1;
+    border-top: 1px solid #8B6F47;
+  }
+  .card-label .num { color: #B83A2A; margin-right: 8px; font-weight: bold; }
+</style>
+</head>
+<body>
+  <h1>丹青劫·无限</h1>
+  <div class="subtitle">国风水墨游戏UI设计稿 · 共11屏</div>
+  <div class="grid">
+    <div class="card">
+      <iframe src="ui-01-login.html" scrolling="no"></iframe>
+      <div class="card-label"><span class="num">01</span>登录页</div>
+    </div>
+    <div class="card">
+      <iframe src="ui-02-loading.html" scrolling="no"></iframe>
+      <div class="card-label"><span class="num">02</span>加载页</div>
+    </div>
+    <div class="card">
+      <iframe src="ui-03-gameplay.html" scrolling="no"></iframe>
+      <div class="card-label"><span class="num">03</span>主玩法</div>
+    </div>
+    <div class="card">
+      <iframe src="ui-04-inventory.html" scrolling="no"></iframe>
+      <div class="card-label"><span class="num">04</span>背包·乾坤袋</div>
+    </div>
+    <div class="card">
+      <iframe src="ui-05-character.html" scrolling="no"></iframe>
+      <div class="card-label"><span class="num">05</span>角色档案</div>
+    </div>
+    <div class="card">
+      <iframe src="ui-06-quest.html" scrolling="no"></iframe>
+      <div class="card-label"><span class="num">06</span>任务录</div>
+    </div>
+    <div class="card">
+      <iframe src="ui-07-shop.html" scrolling="no"></iframe>
+      <div class="card-label"><span class="num">07</span>商店·聚宝阁</div>
+    </div>
+    <div class="card">
+      <iframe src="ui-08-worldmap.html" scrolling="no"></iframe>
+      <div class="card-label"><span class="num">08</span>世界地图</div>
+    </div>
+    <div class="card">
+      <iframe src="ui-09-auction.html" scrolling="no"></iframe>
+      <div class="card-label"><span class="num">09</span>拍卖行</div>
+    </div>
+    <div class="card">
+      <iframe src="ui-10-skilltree.html" scrolling="no"></iframe>
+      <div class="card-label"><span class="num">10</span>技能树·功法图谱</div>
+    </div>
+    <div class="card">
+      <iframe src="ui-11-character-create.html" scrolling="no"></iframe>
+      <div class="card-label"><span class="num">11</span>创建角色</div>
+    </div>
+  </div>
+</body>
+</html>

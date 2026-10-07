@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>丹青劫·无限 - 创建仙号</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1920px; height: 1080px; overflow: hidden;
+    font-family: "KaiTi", "STKaiti", "楷体", serif;
+    background: #F5F0E1;
+  }
+  .screen {
+    position: relative; width: 1920px; height: 1080px;
+    background: linear-gradient(180deg, #e8e4d8 0%, #d4d0c4 100%);
+    display: flex;
+  }
+  .bg-mountain {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 600px 300px at 30% 50%, rgba(50,50,50,0.15) 0%, transparent 70%);
+  }
+  /* 左侧立绘区 */
+  .portrait-area {
+    flex: 1; display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .ink-circle {
+    width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(40,40,40,0.15) 0%, transparent 70%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .character-avatar {
+    font-size: 280px;
+  }
+  .back-btn {
+    position: absolute; top: 30px; left: 30px;
+    width: 60px; height: 60px; background: #3a3a3a;
+    border: 2px solid #8B6F47; color: #F5F0E1;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; cursor: pointer;
+  }
+  /* 右侧捏人面板 */
+  .create-panel {
+    width: 720px; background: #EDE4D0;
+    border: 4px solid #8B6F47; margin: 60px 60px 60px 0;
+    padding: 30px 50px; overflow-y: auto;
+  }
+  .panel-title {
+    text-align: center; font-size: 42px; color: #2C2C2C;
+    letter-spacing: 10px; margin-bottom: 30px; font-weight: bold;
+  }
+  .form-row {
+    display: flex; align-items: center; margin-bottom: 24px; gap: 20px;
+  }
+  .form-label {
+    width: 80px; font-size: 20px; color: #2C2C2C; text-align: right;
+  }
+  /* 性别选择 */
+  .gender-group { display: flex; gap: 16px; }
+  .gender-btn {
+    width: 50px; height: 50px; border-radius: 50%;
+    border: 2px solid #8B6F47; background: #F8F4E8;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; cursor: pointer; color: #5a4a3a;
+  }
+  .gender-btn.active {
+    background: #B83A2A; color: #F5F0E1; border-color: #C9A961;
+  }
+  /* 下拉框 */
+  .select-box {
+    flex: 1; height: 48px; background: #F8F4E8;
+    border: 2px solid #8B6F47; padding: 0 16px;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 18px; color: #2C2C2C;
+  }
+  /* 滑块 */
+  .slider {
+    flex: 1; height: 8px; background: #d4d0c4;
+    border: 1px solid #8B6F47; position: relative;
+  }
+  .slider-thumb {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    width: 20px; height: 20px; border-radius: 50%;
+    background: #8B6F47; border: 2px solid #C9A961;
+  }
+  .slider-labels {
+    display: flex; justify-content: space-between; width: 100%;
+    font-size: 14px; color: #5a4a3a; margin-top: 6px;
+  }
+  /* 选项网格 */
+  .option-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+    flex: 1;
+  }
+  .option-item {
+    height: 60px; background: #F8F4E8; border: 2px solid #8B6F47;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; color: #5a4a3a; cursor: pointer;
+  }
+  .option-item.active {
+    border-color: #B83A2A; background: #e8d8d0; color: #2C2C2C;
+  }
+  /* 名字输入 */
+  .name-input {
+    flex: 1; height: 48px; background: #F8F4E8;
+    border: 2px solid #8B6F47; padding: 0 16px;
+    display: flex; align-items: center;
+    font-size: 18px; color: #2C2C2C;
+  }
+  .random-btn {
+    padding: 10px 20px; border: 2px solid #8B6F47;
+    background: #EDE4D0; font-size: 16px; cursor: pointer;
+  }
+  /* 底部按钮 */
+  .bottom-btns {
+    display: flex; gap: 20px; justify-content: center; margin-top: 36px;
+  }
+  .btn {
+    padding: 14px 40px; font-size: 20px; border: 2px solid #8B6F47;
+    background: #F8F4E8; color: #2C2C2C; cursor: pointer;
+  }
+  .btn.primary {
+    background: #B83A2A; color: #F5F0E1; border-color: #C9A961;
+    font-size: 22px; letter-spacing: 4px;
+  }
+</style>
+</head>
+<body>
+<div class="screen">
+  <div class="bg-mountain"></div>
+
+  <div class="portrait-area">
+    <div class="back-btn">←</div>
+    <div class="ink-circle">
+      <div class="character-avatar">🧙‍♂️</div>
+    </div>
+  </div>
+
+  <div class="create-panel">
+    <div class="panel-title">创建仙号</div>
+
+    <div class="form-row">
+      <div class="form-label">性别</div>
+      <div class="gender-group">
+        <div class="gender-btn active">男</div>
+        <div class="gender-btn">女</div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-label">门派</div>
+      <div class="select-box">
+        <span>青云门</span>
+        <span>▼</span>
+      </div>
+    </div>
+
+    <div class="form-row" style="flex-direction: column; align-items: flex-start;">
+      <div style="display: flex; width: 100%; align-items: center;">
+        <div class="form-label" style="text-align: right;">体型</div>
+        <div style="flex: 1; padding-left: 20px;">
+          <div class="slider"><div class="slider-thumb"></div></div>
+          <div class="slider-labels">
+            <span>瘦削</span>
+            <span>健壮</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-label">面容</div>
+      <div class="option-grid">
+        <div class="option-item">脸型</div>
+        <div class="option-item">眉形</div>
+        <div class="option-item">眼型</div>
+        <div class="option-item">鼻型</div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-label">发型</div>
+      <div class="option-grid">
+        <div class="option-item active">束发</div>
+        <div class="option-item">披发</div>
+        <div class="option-item">马尾</div>
+        <div class="option-item">道髻</div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-label">服饰</div>
+      <div class="option-grid">
+        <div class="option-item active">白衣</div>
+        <div class="option-item">青衣</div>
+        <div class="option-item">蓝袍</div>
+        <div class="option-item">灰衫</div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-label">名字</div>
+      <div class="name-input">青云子</div>
+      <div class="random-btn">随机</div>
+    </div>
+
+    <div class="bottom-btns">
+      <div class="btn">重设</div>
+      <div class="btn primary">踏入丹青劫</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

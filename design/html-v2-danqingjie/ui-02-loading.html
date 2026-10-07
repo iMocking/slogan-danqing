@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>丹青劫·无限 - 加载</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1920px; height: 1080px; overflow: hidden;
+    font-family: "KaiTi", "STKaiti", "楷体", serif;
+    background: #F5F0E1;
+  }
+  .screen {
+    position: relative; width: 1920px; height: 1080px;
+    background: linear-gradient(180deg, #e8e4d8 0%, #d4d0c4 50%, #b8b4a8 100%);
+  }
+  .bg-mountain {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 700px 350px at 25% 40%, rgba(50,50,50,0.3) 0%, transparent 70%),
+      radial-gradient(ellipse 900px 450px at 75% 35%, rgba(45,45,45,0.25) 0%, transparent 70%),
+      radial-gradient(ellipse 500px 200px at 50% 75%, rgba(60,60,60,0.2) 0%, transparent 70%);
+  }
+  /* 右上角 Loading 印章 */
+  .loading-seal {
+    position: absolute; top: 60px; right: 80px;
+    width: 50px; height: 120px; background: #B83A2A;
+    color: #F5F0E1; font-size: 18px; font-weight: bold;
+    display: flex; align-items: center; justify-content: center;
+    writing-mode: vertical-rl; border-radius: 4px;
+    letter-spacing: 4px; z-index: 10;
+  }
+  /* 卷轴加载面板 */
+  .scroll-panel {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    display: flex; align-items: stretch; z-index: 10;
+  }
+  .scroll-rod {
+    width: 20px; background: #5a4a3a; position: relative;
+  }
+  .scroll-rod::before, .scroll-rod::after {
+    content: ""; position: absolute; left: -6px; width: 32px; height: 32px;
+    background: #8B6F47; border-radius: 50%;
+  }
+  .scroll-rod::before { top: -16px; }
+  .scroll-rod::after { bottom: -16px; }
+  .scroll-body {
+    width: 800px; height: 360px;
+    background: #EDE4D0; border: 3px solid #8B6F47;
+    padding: 40px 60px;
+    display: flex; flex-direction: column; align-items: center;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+  }
+  .loading-title {
+    font-size: 42px; color: #2C2C2C; letter-spacing: 8px;
+    margin-bottom: 40px; font-weight: bold;
+  }
+  .progress-area {
+    display: flex; align-items: center; gap: 24px; width: 100%;
+    justify-content: center;
+  }
+  .taiji {
+    width: 80px; height: 80px; border-radius: 50%;
+    background: conic-gradient(#1a1a1a 0deg 180deg, #f5f0e1 180deg 360deg);
+    position: relative;
+    border: 2px solid #8B6F47;
+  }
+  .taiji::before, .taiji::after {
+    content: ""; position: absolute; width: 20px; height: 20px;
+    border-radius: 50%; left: 50%; transform: translateX(-50%);
+  }
+  .taiji::before { top: 0; background: #f5f0e1; }
+  .taiji::after { bottom: 0; background: #1a1a1a; }
+  .progress-bar {
+    width: 500px; height: 24px;
+    background: #d4d0c4; border: 2px solid #8B6F47;
+    position: relative; overflow: hidden;
+  }
+  .progress-fill {
+    width: 65%; height: 100%; background: #8B6F47;
+  }
+  .tips-area {
+    margin-top: 50px; text-align: center; color: #5a4a3a;
+  }
+  .tips-label { font-size: 22px; margin-bottom: 12px; letter-spacing: 4px; }
+  .tips-text { font-size: 20px; letter-spacing: 2px; }
+  /* 左下角八卦 */
+  .bagua {
+    position: absolute; bottom: 60px; left: 60px;
+    width: 100px; height: 100px; border-radius: 50%;
+    border: 3px solid #8B6F47;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 40px; color: #5a4a3a;
+    background: rgba(237, 228, 208, 0.8);
+  }
+  .version {
+    position: absolute; bottom: 30px; right: 60px;
+    color: #5a4a3a; font-size: 18px;
+  }
+</style>
+</head>
+<body>
+<div class="screen">
+  <div class="bg-mountain"></div>
+
+  <div class="loading-seal">Loading</div>
+
+  <div class="scroll-panel">
+    <div class="scroll-rod"></div>
+    <div class="scroll-body">
+      <div class="loading-title">正在载入丹青劫</div>
+      <div class="progress-area">
+        <div class="taiji"></div>
+        <div class="progress-bar">
+          <div class="progress-fill"></div>
+        </div>
+      </div>
+      <div class="tips-area">
+        <div class="tips-label">修行小贴士</div>
+        <div class="tips-text">根基扎实方能走得更远</div>
+      </div>
+    </div>
+    <div class="scroll-rod"></div>
+  </div>
+
+  <div class="bagua">☯</div>
+  <div class="version">v1.0.0</div>
+</div>
+</body>
+</html>

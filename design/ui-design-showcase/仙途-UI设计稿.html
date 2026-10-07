@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>仙途 - 古风水墨修仙MMO游戏UI设计稿</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%238b2500'/%3E%3Ctext x='32' y='44' font-size='32' text-anchor='middle' fill='%23f5f0e8' font-family='serif'%3E%E4%BB%99%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Ma+Shan+Zheng&display=swap">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Serif SC', 'STSong', 'SimSun', serif;
+    background: #f5f0e8;
+    color: #2c2c2c;
+    line-height: 1.8;
+  }
+  /* 顶部导航 */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(245, 240, 232, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #d4c9b8;
+    padding: 12px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 28px; color: #8b2500;
+  }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a {
+    text-decoration: none; color: #4a4a4a; font-size: 14px;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: #8b2500; }
+
+  /* Hero区域 */
+  .hero {
+    margin-top: 60px;
+    padding: 100px 40px 80px;
+    text-align: center;
+    background: linear-gradient(180deg, #e8e0d0 0%, #f5f0e8 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: url('assets/ui-01-login.png') center/cover;
+    opacity: 0.08;
+    pointer-events: none;
+  }
+  .hero h1 {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 64px; color: #2c2c2c;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .hero .seal {
+    display: inline-block;
+    background: #8b2500; color: #f5f0e8;
+    padding: 4px 12px; font-size: 14px;
+    margin-left: 12px;
+    transform: translateY(-20px);
+  }
+  .hero-sub {
+    font-size: 18px; color: #666; margin-bottom: 32px;
+    position: relative;
+  }
+  .hero-desc {
+    max-width: 700px; margin: 0 auto;
+    font-size: 15px; color: #555;
+    position: relative;
+  }
+
+  /* 设计理念区 */
+  .section {
+    max-width: 1280px; margin: 0 auto;
+    padding: 60px 40px;
+  }
+  .section-title {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 36px; color: #2c2c2c;
+    margin-bottom: 12px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .section-title::after {
+    content: ''; flex: 1; height: 1px;
+    background: #d4c9b8;
+  }
+  .section-subtitle {
+    color: #888; font-size: 14px; margin-bottom: 40px;
+  }
+
+  /* 设计规范卡片 */
+  .spec-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  .spec-card {
+    background: #fff;
+    border: 1px solid #d4c9b8;
+    padding: 24px;
+  }
+  .spec-card h3 {
+    font-size: 16px; color: #8b2500; margin-bottom: 12px;
+    font-weight: 600;
+  }
+  .spec-card p { font-size: 13px; color: #666; }
+  .color-row { display: flex; gap: 8px; margin-top: 12px; }
+  .color-dot {
+    width: 28px; height: 28px; border: 1px solid #ddd;
+  }
+
+  /* UI展示区 */
+  .ui-category {
+    margin-bottom: 60px;
+  }
+  .ui-category-title {
+    font-size: 20px; font-weight: 600;
+    color: #2c2c2c;
+    margin-bottom: 8px;
+    padding-left: 12px;
+    border-left: 3px solid #8b2500;
+  }
+  .ui-category-desc {
+    font-size: 13px; color: #888; margin-bottom: 24px;
+    padding-left: 15px;
+  }
+  .ui-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .ui-item {
+    background: #fff;
+    border: 1px solid #d4c9b8;
+    overflow: hidden;
+  }
+  .ui-item-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid #e8e0d0;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .ui-item-name {
+    font-size: 16px; font-weight: 600; color: #2c2c2c;
+  }
+  .ui-item-tag {
+    font-size: 12px; color: #8b2500;
+    background: #fdf0e8;
+    padding: 2px 10px;
+    border: 1px solid #e8c4b0;
+  }
+  .ui-item-img {
+    width: 100%; display: block;
+  }
+  .ui-item-desc {
+    padding: 16px 20px;
+    font-size: 13px; color: #666;
+    border-top: 1px solid #e8e0d0;
+  }
+
+  /* 页脚 */
+  .footer {
+    background: #2c2c2c;
+    color: #999;
+    text-align: center;
+    padding: 40px;
+    font-size: 13px;
+    margin-top: 40px;
+  }
+  .footer .seal-text {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 24px; color: #8b2500;
+    margin-bottom: 8px;
+  }
+
+  /* 响应式 */
+  @media (max-width: 768px) {
+    .nav { padding: 12px 20px; }
+    .nav-links { display: none; }
+    .hero { padding: 60px 20px 40px; }
+    .hero h1 { font-size: 40px; }
+    .section { padding: 40px 20px; }
+    .spec-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- 导航栏 -->
+<nav class="nav">
+  <div class="nav-logo">仙途</div>
+  <div class="nav-links">
+    <a href="#overview">设计概览</a>
+    <a href="#launch">启动流程</a>
+    <a href="#gameplay">主界面</a>
+    <a href="#character">角色系统</a>
+    <a href="#economy">经济系统</a>
+    <a href="#world">世界地图</a>
+  </div>
+</nav>
+
+<!-- Hero区域 -->
+<section class="hero" id="overview">
+  <h1>仙途<span class="seal">UI设计稿</span></h1>
+  <p class="hero-sub">古风水墨修仙MMO游戏 · 全套界面设计系统</p>
+  <p class="hero-desc">
+    以中国传统水墨画为视觉基底，融合黑白灰水墨晕染、朱红印章点缀、暗金云纹边框与仿古宣纸质感，
+    构建一套兼具东方意境与游戏功能清晰度的修仙MMO UI设计系统。
+  </p>
+</section>
+
+<!-- 设计规范 -->
+<section class="section">
+  <h2 class="section-title">设计规范</h2>
+  <p class="section-subtitle">统一视觉语言，贯穿全套11个界面</p>
+
+  <div class="spec-grid">
+    <div class="spec-card">
+      <h3>视觉风格</h3>
+      <p>古风水墨画，传统丹青晕染技法，留白透气，意境悠远。</p>
+      <div class="color-row">
+        <div class="color-dot" style="background:#f5f0e8"></div>
+        <div class="color-dot" style="background:#2c2c2c"></div>
+        <div class="color-dot" style="background:#8b2500"></div>
+        <div class="color-dot" style="background:#b8860b"></div>
+      </div>
+    </div>
+    <div class="spec-card">
+      <h3>色彩体系</h3>
+      <p>水墨黑白灰为基底，朱红印章为强调色，暗金云纹为装饰色。</p>
+    </div>
+    <div class="spec-card">
+      <h3>字体系统</h3>
+      <p>标题用毛笔行书书法体，正文用小楷瘦劲字体，层级清晰。</p>
+    </div>
+    <div class="spec-card">
+      <h3>材质边框</h3>
+      <p>仿古宣纸面板，细墨线分隔，暗金云纹回纹边框，四角角花。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 启动流程 ===== -->
+<section class="section" id="launch">
+  <h2 class="section-title">启动流程界面</h2>
+  <p class="section-subtitle">从登录到进入游戏的完整体验链路</p>
+
+  <div class="ui-category">
+    <h3 class="ui-category-title">登录界面</h3>
+    <p class="ui-category-desc">水墨山水背景 + 卷轴式登录面板，建立第一印象</p>
+    <div class="ui-grid">
+      <div class="ui-item">
+        <div class="ui-item-header">
+          <span class="ui-item-name">游戏登录</span>
+          <span class="ui-item-tag">Launch</span>
+        </div>
+        <img class="ui-item-img" src="assets/ui-01-login.png" alt="游戏登录界面">
+        <div class="ui-item-desc">
+          层叠水墨远山背景，左侧古松岩石，右侧飞檐楼阁。中央卷轴式登录面板包含账号密码输入框、进入按钮与注册/找回/服务器选项。标题"仙途"为行草书法，配朱红篆刻印章。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ui-category">
+    <h3 class="ui-category-title">加载界面</h3>
+    <p class="ui-category-desc">水墨长卷山水，太极进度条，修仙小贴士</p>
+    <div class="ui-grid">
+      <div class="ui-item">
+        <div class="ui-item-header">
+          <span class="ui-item-name">游戏加载</span>
+          <span class="ui-item-tag">Loading</span>
+        </div>
+        <img class="ui-item-img" src="assets/ui-02-loading.png" alt="游戏加载界面">
+        <div class="ui-item-desc">
+          完整水墨山水长卷，瀑布江流扁舟。中央卷轴进度条配太极加载图标，下方显示修仙小贴士文字。右上角竖排朱红印章，左下角八卦阵装饰。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ui-category">
+    <h3 class="ui-category-title">创建角色（捏人）界面</h3>
+    <p class="ui-category-desc">左侧角色大预览，右侧定制面板，360度旋转</p>
+    <div class="ui-grid">
+      <div class="ui-item">
+        <div class="ui-item-header">
+          <span class="ui-item-name">创建角色 / 捏人</span>
+          <span class="ui-item-tag">Character Create</span>
+        </div>
+        <img class="ui-item-img" src="assets/ui-11-character-create.png" alt="捏人创建角色界面">
+        <div class="ui-item-desc">
+          左侧大型角色半身预览，水墨圆形光晕背景。右侧卷轴定制面板包含性别、门派、体型、面容、发型、服饰选项，底部"重设"与"踏入仙途"按钮。左上角返回按钮。
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 主游玩界面 ===== -->
+<section class="section" id="gameplay">
+  <h2 class="section-title">游戏主界面</h2>
+  <p class="section-subtitle">进入游戏后的核心HUD布局</p>
+
+  <div class="ui-category">
+    <h3 class="ui-category-title">世界游玩HUD</h3>
+    <p class="ui-category-desc">全功能战斗界面，左上状态栏、右上小地图、左下聊天、底部技能栏、右下系统菜单</p>
+    <div class="ui-grid">
+      <div class="ui-item">
+        <div class="ui-item-header">
+          <span class="ui-item-name">游戏世界主界面</span>
+          <span class="ui-item-tag">Gameplay HUD</span>
+        </div>
+        <img class="ui-item-img" src="assets/ui-03-gameplay.png" alt="游戏世界游玩主界面">
+        <div class="ui-item-desc">
+          水墨山水场景中，白衣修仙者角色立于山间古道。左上角头像+气血/真元条，右上角小地图+功能按钮，左下角聊天窗口，底部中央8格技能快捷栏+普攻按钮，右下角背包/角色/任务/商城/设置系统菜单。半透明宣纸面板不遮挡场景。
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 角色系统 ===== -->
+<section class="section" id="character">
+  <h2 class="section-title">角色系统界面</h2>
+  <p class="section-subtitle">背包、属性、技能树三大成长系统</p>
+
+  <div class="ui-category">
+    <h3 class="ui-category-title">背包面板</h3>
+    <p class="ui-category-desc">"乾坤袋"卷轴，30格物品网格+右侧详情区</p>
+    <div class="ui-grid">
+      <div class="ui-item">
+        <div class="ui-item-header">
+          <span class="ui-item-name">背包 / 乾坤袋</span>
+          <span class="ui-item-tag">Inventory</span>
+        </div>
+        <img class="ui-item-img" src="assets/ui-04-inventory.png" alt="游戏背包面板">
+        <div class="ui-item-desc">
+          5列6行共30格物品网格，分类标签含全部/装备/消耗品/材料/任务。右侧选中物品详情区显示名称、品质、描述、属性。底部使用/丢弃/整理/拆分按钮，最下方铜钱与灵石货币显示。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ui-category">
+    <h3 class="ui-category-title">角色属性面板</h3>
+    <p class="ui-category-desc">立绘+装备槽+双列属性+深层天赋</p>
+    <div class="ui-grid">
+      <div class="ui-item">
+        <div class="ui-item-header">
+          <span class="ui-item-name">角色档案 / 属性</span>
+          <span class="ui-item-tag">Character</span>
+        </div>
+        <img class="ui-item-img" src="assets/ui-05-character.png" alt="角色属性面板">
+        <div class="ui-item-desc">
+          左侧角色水墨立绘，周围环绕6个装备槽（武器/帽子/衣服/饰品/鞋子/项链）。中间角色名"青云子"+门派"青云门"+境界"筑基中期45级"+修为进度条，双列基础属性。右侧深层属性面板：筋骨/灵气/根骨/悟性/幸运。底部换装/修为/称号按钮。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ui-category">
+    <h3 class="ui-category-title">技能树（功法图谱）</h3>
+    <p class="ui-category-desc">四系天赋网状节点，前置依赖解锁路径</p>
+    <div class="ui-grid">
+      <div class="ui-item">
+        <div class="ui-item-header">
+          <span class="ui-item-name">功法图谱 / 技能树</span>
+          <span class="ui-item-tag">Skill Tree</span>
+        </div>
+        <img class="ui-item-img" src="assets/ui-10-skilltree.png" alt="技能树界面">
+        <div class="ui-item-desc">
+          剑修/法修/丹修/体修四系标签切换。三行五列网状节点布局，已学习节点朱红高亮，可学习节点暗金边框，未解锁灰色。节点间墨线连接表示前置依赖。右侧选中技能详情含描述、冷却、消耗、等级。右上角剩余修为点显示。
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 任务系统 ===== -->
+<section class="section">
+  <h2 class="section-title">任务系统界面</h2>
+  <p class="section-subtitle">任务录列表与详情双栏布局</p>
+
+  <div class="ui-category">
+    <h3 class="ui-category-title">任务面板</h3>
+    <p class="ui-category-desc">左侧任务列表+右侧任务详情/目标/奖励</p>
+    <div class="ui-grid">
+      <div class="ui-item">
+        <div class="ui-item-header">
+          <span class="ui-item-name">任务录</span>
+          <span class="ui-item-tag">Quest</span>
+        </div>
+        <img class="ui-item-img" src="assets/ui-06-quest.png" alt="任务面板">
+        <div class="ui-item-desc">
+          已接任务/可接任务/已完成分类标签。左侧任务列表显示进度与状态，可交付任务朱红点提示。右侧详情区含任务名、类型标签、描述、目标进度勾选、任务奖励列表。底部追踪任务/放弃任务按钮。
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 经济系统 ===== -->
+<section class="section" id="economy">
+  <h2 class="section-title">经济系统界面</h2>
+  <p class="section-subtitle">商城与拍卖行，双轨经济循环</p>
+
+  <div class="ui-category">
+    <h3 class="ui-category-title">商城（聚宝阁）</h3>
+    <p class="ui-category-desc">左侧分类导航+12格商品卡片，热卖角标</p>
+    <div class="ui-grid">
+      <div class="ui-item">
+        <div class="ui-item-header">
+          <span class="ui-item-name">聚宝阁 / 商城</span>
+          <span class="ui-item-tag">Shop</span>
+        </div>
+        <img class="ui-item-img" src="assets/ui-07-shop.png" alt="商城系统面板">
+        <div class="ui-item-desc">
+          推荐/限时特惠/装备/丹药/材料/外观/礼包七类导航。4列3行商品卡片网格，含丹药、装备、外观、坐骑、宠物、称号等品类。右上角灵石/仙玉货币显示与充值按钮。热卖商品朱红角标。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ui-category">
+    <h3 class="ui-category-title">拍卖行（万宝拍卖行）</h3>
+    <p class="ui-category-desc">商品列表表格+筛选搜索+出价/上架</p>
+    <div class="ui-grid">
+      <div class="ui-item">
+        <div class="ui-item-header">
+          <span class="ui-item-name">万宝拍卖行</span>
+          <span class="ui-item-tag">Auction House</span>
+        </div>
+        <img class="ui-item-img" src="assets/ui-09-auction.png" alt="拍卖行界面">
+        <div class="ui-item-desc">
+          浏览拍卖/我的拍卖/我的出价/拍卖记录标签。分类+品质+名称搜索筛选。商品表格含图标、名称、品质、价格、卖家、剩余时间、出价按钮。分页控件，右下角上架拍卖大按钮。
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 世界地图 ===== -->
+<section class="section" id="world">
+  <h2 class="section-title">世界地图界面</h2>
+  <p class="section-subtitle">卷轴式全图，八大区域标注</p>
+
+  <div class="ui-category">
+    <h3 class="ui-category-title">世界大地图</h3>
+    <p class="ui-category-desc">展开的水墨山水长卷，当前位置定位</p>
+    <div class="ui-grid">
+      <div class="ui-item">
+        <div class="ui-item-header">
+          <span class="ui-item-name">修仙世界全图</span>
+          <span class="ui-item-tag">World Map</span>
+        </div>
+        <img class="ui-item-img" src="assets/ui-08-worldmap.png" alt="世界大地图界面">
+        <div class="ui-item-desc">
+          仿古宣纸卷轴样式，上下木质卷轴杆。八大区域：北荒雪原、万妖谷、青云山、东海蓬莱、魔域深渊、中原皇城、南疆沼泽、西漠流沙。当前位置朱红圆点定位，地点间虚线道路连接。左下角指南针，右下角缩放与传送阵按钮。
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 页脚 -->
+<footer class="footer">
+  <div class="seal-text">仙途</div>
+  <p>古风水墨修仙MMO游戏UI设计稿 · 全套11界面 · 16:9比例</p>
+  <p style="margin-top:8px; font-size:12px; color:#666;">水墨丹青 · 道法自然 · 飞升九天</p>
+</footer>
+
+</body>
+</html>

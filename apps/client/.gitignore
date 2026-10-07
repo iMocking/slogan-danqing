@@ -1,0 +1,4 @@
+# Godot 生成目录
+.godot/
+export/
+*.tmp

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>丹青劫·无限 - 主玩法</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1920px; height: 1080px; overflow: hidden;
+    font-family: "KaiTi", "STKaiti", "楷体", serif;
+    background: #F5F0E1;
+  }
+  .screen {
+    position: relative; width: 1920px; height: 1080px;
+    background: linear-gradient(180deg, #e8e4d8 0%, #d4d0c4 50%, #b8b4a8 100%);
+  }
+  .bg-scene {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 800px 400px at 30% 45%, rgba(50,50,50,0.25) 0%, transparent 70%),
+      radial-gradient(ellipse 600px 300px at 75% 40%, rgba(45,45,45,0.2) 0%, transparent 70%);
+  }
+  /* 左上角玩家信息 */
+  .player-info {
+    position: absolute; top: 20px; left: 20px;
+    display: flex; align-items: flex-start; z-index: 10;
+  }
+  .avatar {
+    width: 90px; height: 90px; border-radius: 50%;
+    border: 3px solid #8B6F47; background: #3a3a3a;
+    display: flex; align-items: center; justify-content: center;
+    color: #F5F0E1; font-size: 36px;
+  }
+  .player-detail { margin-left: 12px; }
+  .player-name {
+    font-size: 24px; color: #2C2C2C; font-weight: bold; margin-bottom: 6px;
+  }
+  .hp-bar, .mp-bar {
+    width: 280px; height: 20px; margin-bottom: 4px;
+    border: 1px solid #8B6F47; position: relative;
+  }
+  .hp-bar { background: #8B2020; }
+  .mp-bar { background: #20408B; }
+  .bar-label {
+    position: absolute; left: 6px; top: 0; line-height: 20px;
+    font-size: 12px; color: #F5F0E1;
+  }
+  .bar-value {
+    position: absolute; right: 6px; top: 0; line-height: 20px;
+    font-size: 12px; color: #F5F0E1;
+  }
+  .level-badge {
+    display: inline-block; background: #8B6F47; color: #F5F0E1;
+    padding: 2px 12px; font-size: 14px; margin-top: 4px;
+  }
+  /* 顶部中间资源栏 */
+  .top-resource {
+    position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
+    width: 500px; height: 50px; background: rgba(60,60,60,0.85);
+    border: 2px solid #8B6F47; display: flex; align-items: center;
+    padding: 0 20px; gap: 20px; z-index: 10;
+  }
+  .resource-item { display: flex; align-items: center; gap: 8px; color: #F5F0E1; font-size: 16px; }
+  .resource-icon { font-size: 22px; }
+  /* 右上角小地图 */
+  .minimap {
+    position: absolute; top: 20px; right: 20px;
+    width: 280px; height: 200px;
+    border: 3px solid #8B6F47; background: rgba(237,228,208,0.9);
+    z-index: 10; display: flex; align-items: center; justify-content: center;
+    font-size: 20px; color: #5a4a3a;
+  }
+  /* 右侧功能按钮 */
+  .right-buttons {
+    position: absolute; top: 240px; right: 30px;
+    display: flex; flex-direction: column; gap: 16px; z-index: 10;
+  }
+  .func-btn {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: rgba(60,60,60,0.8); border: 2px solid #8B6F47;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    color: #F5F0E1; font-size: 12px; cursor: pointer;
+  }
+  .func-btn .icon { font-size: 22px; margin-bottom: 2px; }
+  /* 左下角聊天框 */
+  .chat-box {
+    position: absolute; bottom: 120px; left: 20px;
+    width: 420px; height: 180px;
+    background: rgba(40,40,40,0.75); border: 2px solid #8B6F47;
+    padding: 12px; z-index: 10; overflow: hidden;
+  }
+  .chat-line { color: #e0dcd0; font-size: 15px; line-height: 26px; }
+  .chat-world { color: #7ec8e3; }
+  .chat-system { color: #c9a961; }
+  /* 底部技能栏 */
+  .skill-bar {
+    position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 8px; z-index: 10;
+  }
+  .skill-slot {
+    width: 64px; height: 64px;
+    background: rgba(40,40,40,0.85); border: 2px solid #8B6F47;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; color: #c9a961;
+  }
+  /* 普攻按钮 */
+  .attack-btn {
+    position: absolute; bottom: 110px; left: 50%; transform: translateX(-50%);
+    width: 160px; height: 56px; background: #B83A2A;
+    border: 2px solid #C9A961; color: #F5F0E1;
+    font-size: 24px; font-weight: bold; letter-spacing: 8px;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 10;
+  }
+  /* 右下角圆形功能区 */
+  .bottom-right {
+    position: absolute; bottom: 20px; right: 20px;
+    display: flex; flex-direction: column; align-items: flex-end; gap: 12px; z-index: 10;
+  }
+  .circle-func {
+    width: 72px; height: 72px; border-radius: 50%;
+    background: rgba(60,60,60,0.8); border: 2px solid #8B6F47;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    color: #F5F0E1; font-size: 14px;
+  }
+  .circle-func .icon { font-size: 24px; }
+  .settings {
+    width: 100px; height: 100px; font-size: 36px;
+  }
+</style>
+</head>
+<body>
+<div class="screen">
+  <div class="bg-scene"></div>
+
+  <!-- 左上角玩家信息 -->
+  <div class="player-info">
+    <div class="avatar">侠</div>
+    <div class="player-detail">
+      <div class="player-name">青云子</div>
+      <div class="hp-bar">
+        <span class="bar-label">气血</span>
+        <span class="bar-value">12580/15000</span>
+      </div>
+      <div class="mp-bar">
+        <span class="bar-label">真元</span>
+        <span class="bar-value">8600/10000</span>
+      </div>
+      <div class="level-badge">等级 45</div>
+    </div>
+  </div>
+
+  <!-- 顶部资源栏 -->
+  <div class="top-resource">
+    <div class="resource-item"><span class="resource-icon">🪙</span><span>铜钱 125,800</span></div>
+    <div class="resource-item"><span class="resource-icon">💎</span><span>灵石 3,200</span></div>
+  </div>
+
+  <!-- 右上角小地图 -->
+  <div class="minimap">
+    <div style="text-align: center;">
+      <div style="font-size: 22px; margin-bottom: 4px;">青云山</div>
+      <div style="font-size: 14px; opacity: 0.7;">水墨缩略地图</div>
+    </div>
+  </div>
+
+  <!-- 右侧功能按钮 -->
+  <div class="right-buttons">
+    <div class="func-btn"><span class="icon">🎁</span><span>活动</span></div>
+    <div class="func-btn"><span class="icon">✉</span><span>邮件</span></div>
+    <div class="func-btn"><span class="icon">👥</span><span>好友</span></div>
+    <div class="func-btn"><span class="icon">⚔</span><span>队伍</span></div>
+  </div>
+
+  <!-- 左下角聊天框 -->
+  <div class="chat-box">
+    <div class="chat-line"><span class="chat-world">[世界]剑无双：</span>组队刷副本啦</div>
+    <div class="chat-line"><span class="chat-world">[世界]月下舞：</span>有人收材料吗</div>
+    <div class="chat-line"><span class="chat-system">[系统]</span>欢迎来到丹青劫世界</div>
+  </div>
+
+  <!-- 普攻按钮 -->
+  <div class="attack-btn">普 攻</div>
+
+  <!-- 底部技能栏 -->
+  <div class="skill-bar">
+    <div class="skill-slot">⚔</div>
+    <div class="skill-slot">🗡</div>
+    <div class="skill-slot">💨</div>
+    <div class="skill-slot">🔥</div>
+    <div class="skill-slot">❄</div>
+    <div class="skill-slot">🌪</div>
+    <div class="skill-slot">⚡</div>
+    <div class="skill-slot">☯</div>
+  </div>
+
+  <!-- 右下角功能区 -->
+  <div class="bottom-right">
+    <div style="display: flex; gap: 12px;">
+      <div class="circle-func"><span class="icon">🎒</span><span>背包</span></div>
+      <div class="circle-func"><span class="icon">👤</span><span>角色</span></div>
+      <div class="circle-func"><span class="icon">📖</span><span>任务</span></div>
+    </div>
+    <div style="display: flex; gap: 12px;">
+      <div class="circle-func"><span class="icon">🏪</span><span>商城</span></div>
+      <div class="circle-func settings"><span class="icon">⚙</span></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

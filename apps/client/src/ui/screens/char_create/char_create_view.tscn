@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/ui/screens/char_create/char_create_view.gd" id="1_cc"]
+
+[node name="CharCreateView" type="Control"]
+script = ExtResource("1_cc")
